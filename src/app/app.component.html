@@ -1,0 +1,79 @@
+<p>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Find out the Best Cocktails for You</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+<div class="maindiv">
+  <div class="side filters">
+    <h1>Cocktail  Filters    &nbsp; <button mat-mini-fab color="primary" type="button" (click)="reset()" matTooltip="Reset">
+      <mat-icon>refresh</mat-icon>
+    </button></h1>
+
+    <section>
+      <mat-form-field class="example-full-width">
+        <mat-label>Search By Name</mat-label>
+        <input matInput placeholder="Ex. vodka,margarita etc"  [(ngModel)]="searchByName"/>
+      </mat-form-field>
+      <button mat-mini-fab color="primary" type="button" (click)="filter('name',searchByName)" matTooltip="Search"><mat-icon>search</mat-icon></button>
+      </section><br>
+ <mat-form-field appearance="fill">
+  <mat-label>Ingredients</mat-label>
+  <mat-select [(ngModel)]="selectedIngredient" name="data" (selectionChange)="filter('ing',selectedIngredient)">
+    <mat-option *ngFor="let data of ingredients" [value]="data.strIngredient1" >
+      {{data.strIngredient1}}
+    </mat-option>
+  </mat-select>
+ </mat-form-field>
+<br>
+<mat-form-field appearance="fill" >
+  <mat-label>Cateogry</mat-label>
+  <mat-select [(ngModel)]="selectedCategory" name="data" (selectionChange)="filter('cat',selectedCategory)">
+    <mat-option *ngFor="let data of category" [value]="data.strCategory" >
+      {{data.strCategory}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+  </div>
+
+ <div *ngIf="cocktailData" class="side">
+   <h1 *ngIf="selectedIngredient"> Results Based on Ingredient: {{selectedIngredient}}</h1>
+   <h1 *ngIf="selectedCategory"> Results Based on Category: {{selectedCategory}}</h1>
+   <h1 *ngIf="searchByName"> Results Based on Name: {{searchByName}}</h1>
+  <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+    <div *cdkVirtualFor="let data of cocktailData" class="example-item">
+      <mat-card class = "tp-card">
+          <mat-card-header>
+             <div mat-card-avatar class = "tp-header-image"></div>
+             <mat-card-title>{{data.strDrink}}</mat-card-title>
+             <mat-card-subtitle *ngIf="data.strCategory">Type {{data.strCategory}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src = "{{data.strDrinkThumb}}" >
+          <mat-card-content>
+             <p>
+                Taste the magic of drinks.
+             </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" matTooltip="Like">
+              <mat-icon color="primary">favorite</mat-icon>
+            </button>
+            <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" matTooltip="Share">
+              <mat-icon color="primary">share</mat-icon>
+            </button>
+          </mat-card-actions>
+       </mat-card>
+    </div>
+  </cdk-virtual-scroll-viewport>
+ </div>
+ <div *ngIf="!cocktailData"><p>No Drinks Found by the given Name</p></div>
+</div>
