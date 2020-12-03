@@ -1,3 +1,8 @@
+Use Visual Studio Code for better experience.
+To install angular material use angular CLI command : ng add @angular/material
+To run the program ng serve
+ 
+
 # Cocktail
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
